@@ -1,0 +1,18 @@
+{
+  "chanel": [
+    {
+      "id": 1,
+      "name": "Майже програмісти",
+      "img": "https://loremflickr.com/cache/resized/65535_51924193628_25da1722fa_b_640_480_nofilter.jpg",
+      "favorite": true,
+      "description": "Odio quis tenetur reiciendis ab quis tempora tempora consequatur voluptatibus. Repudiandae explicabo ut quia omnis reiciendis qui et dolorem. Voluptas pariatur ut atque sunt omnis quasi labore non. Amet in in odio. Provident nihil nesciunt earum voluptas molestias nemo voluptas. Aliquam rem accusamus mollitia labore expedita et. Qui dolorem id doloremque possimus magnam ex odio animi ratione. Minima esse perspiciatis aut. Saepe similique temporibus aut voluptatum earum et et natus. Et nihil nulla animi nihil sint et a"
+    },
+    {
+      "id": 2,
+      "name": "DDOS",
+      "img": "https://loremflickr.com/cache/resized/65535_51946948657_f9d7c937a5_b_640_480_nofilter.jpg",
+      "description": "Odio quis tenetur reiciendis ab quis tempora tempora consequatur voluptatibus. Repudiandae explicabo ut quia omnis reiciendis qui et dolorem. Voluptas pariatur ut atque sunt omnis quasi labore non. Amet in in odio. Provident nihil nesciunt earum voluptas molestias nemo voluptas. Aliquam rem accusamus mollitia labore expedita et",
+      "favorite": true
+    }
+  ]
+}

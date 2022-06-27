@@ -1,18 +1,38 @@
-import React from 'react';
+import React, {useState} from 'react';
 import styled from 'styled-components'
-const ChanelItem = ({key, description, name, path, handlerOpen}) => {
+import axios from 'axios';
+
+const ChanelItem = ({ el, handlerOpen, deleteChanel, setEditChanel}) => {
+    const [favorite, setLike] = useState(el.favorite)
+    const setFavorite = (el) => {
+        if(favorite){
+            axios.patch(`http://localhost:5000/chanel/${el.id}`, {favorite: false})
+            setLike(false)
+        }else {
+            axios.patch(`http://localhost:5000/chanel/${el.id}`, {favorite: true})
+            setLike(true)
+        }
+    }
+
     return (
-        <div key={key} style={{width: '100%', padding: '20px', position: 'relative'}}>
+        <div style={{width: '100%', padding: '20px', position: 'relative'}}>
             <Chanel>
                 <ChanelAction>
-                    <img alt={'delete'} src={'delete.png'} width={'40px'}/>
-                    <img alt={'edit'} src={'edit.webp'} width={'39px'} onClick={handlerOpen}/>
-                    <img alt={'like'} style={{filter: 'grayscale(0.9)'}} src={'like.png'} width={'40px'}/>
+                    <img alt={'delete'} src={'delete.png'} width={'40px'} onClick={()=>{deleteChanel(el)}}/>
+                    <img alt={'edit'} src={'edit.webp'} width={'39px'}
+                         onClick={()=>{
+                            setEditChanel(el)
+                            handlerOpen()
+                         }}/>
+                    <img alt={'like'}
+                         onClick={()=>{setFavorite(el)}}
+                         style={{filter: !favorite ? 'grayscale(0.95)': 'grayscale(0)'}}
+                         src={'love.png'} width={'40px'}/>
                 </ChanelAction>
-                <ImgChanel alt={'item'} src={path}/>
-                <ChanelName>{name}</ChanelName>
+                <ImgChanel alt={'item'} src={el.img}/>
+                <ChanelName>{el.name}</ChanelName>
                 <ChanelDescription>
-                    <p>{description}</p>
+                    <p>{el.description}</p>
                 </ChanelDescription>
             </Chanel>
         </div>
@@ -43,7 +63,7 @@ const ChanelName = styled.h2`
   margin: 30px 0;
   font-family: Tahoma,serif;
 `
-const ChanelDescription = styled.p`
+const ChanelDescription = styled.div`
   height: 100px;
   overflow-y: scroll;
   padding: 0 10px;

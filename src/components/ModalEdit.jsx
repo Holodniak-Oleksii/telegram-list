@@ -1,20 +1,28 @@
 import React from 'react';
 import styled from 'styled-components'
-const ModalEdit = ({open, setOpen}) => {
+const ModalEdit = ({open, setOpen, form, setForm, editChanel, isEdit, addChanel}) => {
+    const changeHandler = (event) => {
+        setForm({...form, [event.target.name]: event.target.value})
+    }
     return (
-        <div className={'modal'} style={{
-            display: !open ? 'none': 'flex',
-        }} onClick={(e)=>{
-            console.log()
-            if(e.target.getAttribute('class') === 'modal'){
-                setOpen(false)
-            }
-        }}>
+        <div className={'modal'} style={{display: !open ? 'none': 'flex'}}
+             onClick={(e)=>{
+                 if(e.target.getAttribute('class') === 'modal'){
+                     setOpen(false)
+                 }
+             }}
+        >
             <FormModal>
-                <TextInput type="text" name="name" placeholder="Введіть ім'я каналу" required/>
-                <TextInput type="text" name="path" placeholder="Вкажіть URL до зображення" required/>
-                <TextArea rows={5} name="description" placeholder="Введіть опис каналу" required/>
-                <ButtonChange>Змінити</ButtonChange>
+                <TextInput type="text" name="name" value={form.name} onChange={changeHandler} placeholder="Введіть ім'я каналу" required/>
+                <TextInput type="text" name="img" value={form.img} onChange={changeHandler} placeholder="Вкажіть URL до зображення" required/>
+                <TextArea rows={5} name="description" value={form.description} onChange={changeHandler} placeholder="Введіть опис каналу" required/>
+                <ButtonChange onClick={()=>{
+                    if(isEdit !== null){
+                        editChanel()
+                    } else {
+                        addChanel()
+                    }
+                }}>{isEdit !== null ?"Змінити":"Додати"}</ButtonChange>
             </FormModal>
         </div>
     );
