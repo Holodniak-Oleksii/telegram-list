@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
+import TextInput from './elements/TextInput'
 const ModalEdit = ({open, setOpen, form, setForm, editChanel, isEdit, addChanel}) => {
     const changeHandler = (event) => {
         setForm({...form, [event.target.name]: event.target.value})
@@ -15,6 +16,11 @@ const ModalEdit = ({open, setOpen, form, setForm, editChanel, isEdit, addChanel}
             <FormModal>
                 <TextInput type="text" name="name" value={form.name} onChange={changeHandler} placeholder="Введіть ім'я каналу" required/>
                 <TextInput type="text" name="img" value={form.img} onChange={changeHandler} placeholder="Вкажіть URL до зображення" required/>
+                <Select value={form.type} name="type" onChange={changeHandler}>
+                    <option value="programing">Programing</option>
+                    <option value="music">Music</option>
+                    <option value="game">Game</option>
+                </Select>
                 <TextArea rows={5} name="description" value={form.description} onChange={changeHandler} placeholder="Введіть опис каналу" required/>
                 <ButtonChange onClick={()=>{
                     if(isEdit !== null){
@@ -38,17 +44,7 @@ const FormModal = styled.div`
   justify-content: center;
   align-items: center;
 `
-const TextInput = styled.input`
-  font-family: Arial, Sans-Serif, sans-serif;
-  font-size: 18px;
-  margin-bottom: 10px;
-  color: #383636;
-  padding: 10px;
-  width: 100%;
-  outline:none;
-  border: solid 1px #adadad;
-  border-radius: 8px;
-`
+
 const TextArea = styled.textarea`
   font-family: Arial, Sans-Serif, sans-serif;
   font-size: 18px;
@@ -76,4 +72,16 @@ const ButtonChange = styled.button`
     cursor: pointer;
   }
 `
+const Select = styled.select`
+  font-family: Arial, Sans-Serif, sans-serif;
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #383636;
+  padding: 10px;
+  width: 100%;
+  outline:none;
+  border: solid 1px #adadad;
+  border-radius: 8px;
+`
+
 export default ModalEdit;
