@@ -40,7 +40,7 @@ const GridItems = () => {
         setOpen(false)
     }
     const handlerChooser = (category) => {
-        if(category === 'all') return axios.get('http://localhost:5000/chanel').then((res)=>{setChanel(res.data)})
+        if(category === 'all') return axios.get(process.env.REACT_APP_API_URL).then((res)=>{setChanel(res.data)})
         if(category === 'random'){
             let random = Math.floor(Math.random() * elementsCounter+1)
             return axios.get(`${process.env.REACT_APP_API_URL}?id=${random}`).then((res)=>{

@@ -6,10 +6,10 @@ const ChanelItem = ({ el, handlerOpen, deleteChanel, setEditChanel}) => {
     const [favorite, setLike] = useState(el.favorite)
     const setFavorite = (el) => {
         if(favorite){
-            axios.patch(`http://localhost:5000/chanel/${el.id}`, {favorite: false})
+            axios.patch(`${process.env.REACT_APP_API_URL}/${el.id}`, {favorite: false})
             setLike(false)
         }else {
-            axios.patch(`http://localhost:5000/chanel/${el.id}`, {favorite: true})
+            axios.patch(`${process.env.REACT_APP_API_URL}/${el.id}`, {favorite: true})
             setLike(true)
         }
     }
