@@ -1,11 +1,20 @@
 import React , {useState} from 'react';
-import styled from 'styled-components';
+import {useDispatch} from 'react-redux'
+import {axiosFilterChannel} from '../storage/channelSlice'
+import {useSelector} from 'react-redux'
+import {ContainerCategories, CategoryItem} from './blocks/CategoryStyleBlocks'
 
-const CategoryChooser = ({handlerChooser}) => {
-  const [isActive, setActive] = useState('1')
+const CategoryChooser = () => {
 
+    const [isActive, setActive] = useState('1')
+    const dispatch = useDispatch()
+    const channelArray = useSelector(state => state.channel.channels)
+    const handlerChooser = (category) => {
+        dispatch(axiosFilterChannel({category: category, channelArrayLength: channelArray.length }))
+    }
+  
     return (
-        <ConainerCategories>
+        <ContainerCategories>
             <CategoryItem style={{
                     backgroundColor : isActive === '1'? "#0d66e7" : "",
                     color : isActive === '1'? "#f8f8f8" : ""
@@ -41,25 +50,8 @@ const CategoryChooser = ({handlerChooser}) => {
                 setActive('5')
                 handlerChooser('random')
             }}>Випадковий канал</CategoryItem>
-        </ConainerCategories>
+        </ContainerCategories>
     );
 };
 
-const ConainerCategories = styled.div`
-  width: 100%;
-  border-top-right-radius: 20px;
-  overflow: hidden;
-`
-const CategoryItem = styled.div`
-  cursor: pointer;
-  font-style: italic;
-  padding: 10px 5px;
-  color: #222225;
-  background-color: #f7f7f7;
-
-  &:hover {
-    color: #f8f8f8;
-    background-color: #649bec;
-  }
-`
 export default CategoryChooser;
