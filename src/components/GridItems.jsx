@@ -3,6 +3,7 @@ import ChannelItem from "./ChannelItem";
 import {useSelector} from 'react-redux'
 import ModalEdit from "./ModalEdit";
 import {TextInput} from './blocks/ModalStyleBlocks'
+import Loader from './Loader';
 import CategoryChooser from './CategoryChooser'
 import {AddChannel, GridChannels} from './blocks/GridStyleBlocks'
 import {useDispatch} from 'react-redux'
@@ -15,7 +16,7 @@ const GridItems = () => {
     const [form, setForm] = useState({name: '', img: '', description: '', type: ''})
     const dispatch = useDispatch()
     const channelArray = useSelector(state => state.channel.channels)
-
+    const loading = useSelector(state => state.channel.status)
     useEffect(()=>{
         dispatch(axiosChannel())
     },[dispatch])
@@ -42,38 +43,51 @@ const GridItems = () => {
             channel.name.toLowerCase().includes(search)
         )
     }
-    return (
-        <div style={{margin: '50px auto', width: '90%', display: 'flex', justifyContent: 'space-between'}}>
-            <div style={{width: '15%'}}>
-                <CategoryChooser/>
-            </div>
-            <div style={{width: '80%'}}>
-                <TextInput type="text" value={search} onChange={(e)=>{setSearch(e.target.value)}} placeholder="Пошук..."/>
-                <GridChannels>
-                {handleSearch().map((current, idx)=>(
-                    <div key={idx}>
-                        <ChannelItem handlerOpen={handlerOpen}
-                                    setEditChannel={setEditChannel}
-                                    el={current}
+    if(loading === 'resolved'){
+        return (
+            <div style={{margin: '50px auto', width: '90%', display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{width: '15%'}}>
+                    <CategoryChooser/>
+                </div>
+                <div style={{width: '80%'}}>
+                    <TextInput type="text" value={search} onChange={(e)=>{setSearch(e.target.value)}} placeholder="Пошук..."/>
+                    <GridChannels>
+                    {handleSearch().map((current, idx)=>(
+                        <div key={idx}>
+                            <ChannelItem handlerOpen={handlerOpen}
+                                        setEditChannel={setEditChannel}
+                                        el={current}
+                            />
+                        </div>
+                        ))}
+                        <AddChannel onClick={()=>{
+                            setForm({name: '', img: '', description: '', type: ''})
+                            setEdit(null)
+                            handlerOpen()
+                        }}>
+                            <img alt={'add'} src={'add.png'} width={'150px'}/>
+                        </AddChannel>
+                    </GridChannels>
+                    <ModalEdit
+                        open={open} isEdit={isEdit} setOpen={setOpen}
+                        form={form} setForm={setForm} addTelegram={addTelegram}
+                        editChannel={editChannel}
                         />
-                    </div>
-                    ))}
-                    <AddChannel onClick={()=>{
-                        setForm({name: '', img: '', description: '', type: ''})
-                        setEdit(null)
-                        handlerOpen()
-                    }}>
-                        <img alt={'add'} src={'add.png'} width={'150px'}/>
-                    </AddChannel>
-                </GridChannels>
-                <ModalEdit
-                    open={open} isEdit={isEdit} setOpen={setOpen}
-                    form={form} setForm={setForm} addTelegram={addTelegram}
-                    editChannel={editChannel}
-                    />
+                </div>
             </div>
-        </div>
-    );
+        );
+    }else{
+        return (
+            <div style={{margin: '50px auto', width: '90%', display: 'flex', justifyContent: 'space-between'}}>
+                <div style={{width: '15%'}}>
+                    <CategoryChooser/>
+                </div>
+                <div style={{width: '80%'}}>
+                    <Loader/>    
+                </div>
+            </div>
+        );
+    }
 };
 
 export default GridItems;
