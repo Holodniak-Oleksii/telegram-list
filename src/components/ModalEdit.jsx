@@ -1,7 +1,7 @@
 import React from 'react';
 import {TextInput, Select, ButtonChange, TextArea, FormModal} from './blocks/ModalStyleBlocks'
 
-const ModalEdit = ({open, setOpen, form, setForm, editChannel, addTelegram, isEdit}) => {
+const ModalEdit = ({open, setOpen, form, setForm, editChannel, addTelegram}) => {
     const changeHandler = (event) => {
         setForm({...form, [event.target.name]: event.target.value})
     }
@@ -23,12 +23,12 @@ const ModalEdit = ({open, setOpen, form, setForm, editChannel, addTelegram, isEd
                 </Select>
                 <TextArea rows={5} name="description" value={form.description} onChange={changeHandler} placeholder="Введіть опис каналу" required/>
                 <ButtonChange onClick={()=>{
-                    if(isEdit !== null){
+                    if(form.id !== null){
                         editChannel()
                     } else {
                         addTelegram()
                     }
-                }}>{isEdit !== null ?"Змінити":"Додати"}</ButtonChange>
+                }}>{form.id !== null ?"Змінити":"Додати"}</ButtonChange>
             </FormModal>
         </div>
     );

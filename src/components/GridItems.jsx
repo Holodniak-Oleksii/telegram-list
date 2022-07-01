@@ -12,8 +12,7 @@ import {axiosEditChannel, axiosChannel, axiosAddChannel} from '../storage/channe
 const GridItems = () => {
     const [open, setOpen] = useState(false)
     const [search, setSearch] = useState("");
-    const [isEdit, setEdit] = useState([])
-    const [form, setForm] = useState({name: '', img: '', description: '', type: ''})
+    const [form, setForm] = useState({id: null, name: '', img: '', description: '', type: ''})
     const dispatch = useDispatch()
     const channelArray = useSelector(state => state.channel.channels)
     const loading = useSelector(state => state.channel.status)
@@ -30,11 +29,10 @@ const GridItems = () => {
         setOpen(false)
     }    
     const setEditChannel = (el) =>{
-        setEdit(el)
-        setForm({name: el.name, img: el.img, description: el.description, type: el.type}
+        setForm({id: el.id, name: el.name, img: el.img, description: el.description, type: el.type}
     )}
     const editChannel = () =>{
-        dispatch(axiosEditChannel({isEdit: isEdit, form: form}))
+        dispatch(axiosEditChannel(form))
         setOpen(false)
     }
     
@@ -61,15 +59,14 @@ const GridItems = () => {
                         </div>
                         ))}
                         <AddChannel onClick={()=>{
-                            setForm({name: '', img: '', description: '', type: ''})
-                            setEdit(null)
+                            setForm({id: null, name: '', img: '', description: '', type: ''})
                             handlerOpen()
                         }}>
                             <img alt={'add'} src={'add.png'} width={'150px'}/>
                         </AddChannel>
                     </GridChannels>
                     <ModalEdit
-                        open={open} isEdit={isEdit} setOpen={setOpen}
+                        open={open} setOpen={setOpen}
                         form={form} setForm={setForm} addTelegram={addTelegram}
                         editChannel={editChannel}
                         />

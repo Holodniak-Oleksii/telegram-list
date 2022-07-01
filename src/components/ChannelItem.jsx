@@ -5,26 +5,18 @@ import {ChannelAction, ChannelDescription, ChannelName, ImgChannel, Channel} fro
 
 const ChannelItem = ({ el, handlerOpen, setEditChannel}) => {
     const dispatch = useDispatch()
-    const deleteChannel = (el) =>{
-      dispatch(axiosRemoveChannel({id: el.id}))
-    }
-  
-    const setFavorite = (el) => {
-      dispatch(axiosFavoriteChannel(el))
-    }
-
     return (
         <div style={{width: '100%', padding: '20px', position: 'relative'}}>
             <Channel>
                 <ChannelAction>
-                    <img alt={'delete'} src={'delete.png'} width={'40px'} onClick={()=>{deleteChannel(el)}}/>
+                    <img alt={'delete'} src={'delete.png'} width={'40px'} onClick={()=>{dispatch(axiosRemoveChannel({id: el.id}))}}/>
                     <img alt={'edit'} src={'edit.webp'} width={'39px'}
                          onClick={()=>{
                             setEditChannel(el)
                             handlerOpen()
                          }}/>
                     <img alt={'like'}
-                         onClick={()=>{setFavorite(el)}}
+                         onClick={()=>{dispatch(axiosFavoriteChannel(el))}}
                          style={{filter: !el.favorite ? 'grayscale(0.95)': 'grayscale(0)'}}
                          src={'love.png'} width={'40px'}/>
                 </ChannelAction>

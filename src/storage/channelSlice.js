@@ -39,9 +39,9 @@ export const axiosEditChannel = createAsyncThunk(
     'channels/axiosEditChannel',
     async function(data, {rejectWithValue, dispatch}){ 
         try{ 
-            await axios.patch(`${process.env.REACT_APP_API_URL}/${data.isEdit.id}`,
-            {name: data.form.name, img: data.form.img, 
-                description: data.form.description, type: data.form.type})
+            await axios.patch(`${process.env.REACT_APP_API_URL}/${data.id}`,
+            {name: data.name, img: data.img, 
+                description: data.description, type: data.type})
             dispatch(updateChannel(data))
         }catch(e){
             return rejectWithValue(e.message);
@@ -97,8 +97,8 @@ const channelSlice = createSlice({
             state.channels = state.channels.filter((item) => item.id !== action.payload.id);
         },
         updateChannel(state, action) {
-            const change = state.channels.find(channel => channel.id === action.payload.isEdit.id);
-            state.channels[state.channels.indexOf(change)] = action.payload.form;
+            const change = state.channels.find(channel => channel.id === action.payload.id);
+            state.channels[state.channels.indexOf(change)] = action.payload;
         },
         favoriteChannel(state, action) {
             const change = state.channels.find(channel => channel.id === action.payload.id);
